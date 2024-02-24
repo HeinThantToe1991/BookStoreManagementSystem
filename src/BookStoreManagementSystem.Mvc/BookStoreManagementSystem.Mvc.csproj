@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\BackendLogIn\**" />
     <Compile Remove="wwwroot\css\**" />
     <Compile Remove="wwwroot\data\**" />
     <Compile Remove="wwwroot\Homer\**" />
@@ -34,7 +33,6 @@
     <Compile Remove="wwwroot\js\**" />
     <Compile Remove="wwwroot\lib\**" />
     <Compile Remove="wwwroot\novalink\**" />
-    <Content Remove="wwwroot\BackendLogIn\**" />
     <Content Remove="wwwroot\css\**" />
     <Content Remove="wwwroot\data\**" />
     <Content Remove="wwwroot\Homer\**" />
@@ -43,7 +41,6 @@
     <Content Remove="wwwroot\js\**" />
     <Content Remove="wwwroot\lib\**" />
     <Content Remove="wwwroot\novalink\**" />
-    <EmbeddedResource Remove="wwwroot\BackendLogIn\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
     <EmbeddedResource Remove="wwwroot\data\**" />
     <EmbeddedResource Remove="wwwroot\Homer\**" />
@@ -52,7 +49,6 @@
     <EmbeddedResource Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
     <EmbeddedResource Remove="wwwroot\novalink\**" />
-    <None Remove="wwwroot\BackendLogIn\**" />
     <None Remove="wwwroot\css\**" />
     <None Remove="wwwroot\data\**" />
     <None Remove="wwwroot\Homer\**" />
@@ -64,6 +60,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_BackendLoginLayout.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="wwwroot\BackendLogIn\font-awesome\4.7.0\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\BackendLogIn\font-awesome\4.7.0\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\BackendLogIn\jquery-3.3.1.slim.min.js" />
     <None Include="wwwroot\Content\assets\favicon.ico" />
     <None Include="wwwroot\Content\assets\img\bg-masthead.jpg" />
     <None Include="wwwroot\Content\assets\img\portfolio\fullsize\1.jpg" />
