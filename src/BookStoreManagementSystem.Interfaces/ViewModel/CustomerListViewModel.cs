@@ -7,6 +7,6 @@ namespace BookStoreManagementSystem.Interfaces.ViewModel
     public class CustomerListViewModel
     {
         [JsonProperty("customer")]
-        public List<CustomerViewModel> Books;
+        public List<CustomerViewModel> Customers;
     }
 }

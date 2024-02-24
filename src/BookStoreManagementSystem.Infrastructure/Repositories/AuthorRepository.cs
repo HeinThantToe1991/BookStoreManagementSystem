@@ -9,38 +9,38 @@ using System.Text;
 
 namespace BookStoreManagementSystem.Infrastructure.Repositories
 {
-    public class BookCategoryRepository : IBookCategoryRepository
+    public class AuthorRepository : IAuthorRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public BookCategoryRepository(ApplicationDbContext context)
+        public AuthorRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<BookCategories> GetBookCategories()
+        public List<Author> GetAuthors()
         {
-            return _context.BookCategories.ToList();
+            return _context.Authors.ToList();
         }
 
-        public BookCategories GetBookCategoryById(Guid id)
+        public Author GetAuthorById(Guid id)
         {
-            return _context.BookCategories.FirstOrDefault(s=>s.Id == id);
+            return _context.Authors.FirstOrDefault(s=>s.Id == id);
         }
 
-        public BookCategories GetBookCategoryByName(string name)
+        public Author GetAuthorByName(string name)
         {
-            return _context.BookCategories.FirstOrDefault(s => s.CategoryName == name);
+            return _context.Authors.FirstOrDefault(s => s.Name == name);
         }
 
-        public void Add(BookCategories data)
+        public void Add(Author data)
         {
-            _context.BookCategories.Add(data);
+            _context.Authors.Add(data);
             _context.SaveChanges();
         }
-        public void Update(BookCategories data)
+        public void Update(Author data)
         {
-            var existingEntity = _context.BookCategories.Find(data.Id);
+            var existingEntity = _context.Authors.Find(data.Id);
             if (existingEntity != null)
             {
                 // Detach the existing entity from the context
@@ -52,10 +52,10 @@ namespace BookStoreManagementSystem.Infrastructure.Repositories
         }
         public void Delete(Guid id)
         {
-            var category = _context.BookCategories.FirstOrDefault(s => s.Id == id);
-            if (category != null)
+            var data = _context.Authors.FirstOrDefault(s => s.Id == id);
+            if (data != null)
             {
-                _context.BookCategories.Remove(category);
+                _context.Authors.Remove(data);
                 _context.SaveChanges();
             }
         }

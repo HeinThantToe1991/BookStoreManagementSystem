@@ -18,6 +18,7 @@ using BookStoreManagementSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using BookStoreManagementSystem.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace WebApplication1E
 {
@@ -63,6 +64,10 @@ namespace WebApplication1E
             services.AddScoped<IBookCategoryService, BookCategoryService>();
             services.AddScoped<IUserService, UserService>();
             services.AddAuthorization();
+            services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+            services.AddSingleton<ITempDataDictionaryFactory, TempDataDictionaryFactory>();
             // Add framework services.
             services.AddControllers();
 
@@ -87,11 +92,10 @@ namespace WebApplication1E
         
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers(); 
-              endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

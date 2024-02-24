@@ -1,36 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using BookStoreManagementSystem.Domain;
 using BookStoreManagementSystem.Interfaces;
 using BookStoreManagementSystem.Interfaces.ViewModel;
 using Microsoft.AspNetCore.Authorization;
-using System;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace BookStoreManagementSystem.Mvc.ApiController
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookStoreController : ControllerBase
+    public class AuthorController : ControllerBase
     {
+        private readonly IAuthorService _authorService;
 
-        private readonly IBookService _bookService;
-
-        public BookStoreController(IBookService bookService)
+        public AuthorController(IAuthorService authorService)
         {
-            _bookService = bookService;
+            _authorService = authorService;
         }
 
-        [HttpPost("add"),Authorize]
-        public ActionResult<ReturnMessageViewModel<BookViewModel>> AddBook(BookViewModel viewModel)
+        [HttpPost("add"), Authorize]
+        public ActionResult<ReturnMessageViewModel<AuthorViewModel>> AddAuthor(AuthorViewModel viewModel)
         {
-            var data = new ReturnMessageViewModel<BookViewModel>();
+            var data = new ReturnMessageViewModel<AuthorViewModel>();
             if (viewModel == null)
             {
-                return BadRequest(" data is missing.");
+                return BadRequest("Author data is missing.");
             }
             try
             {
-                data.Data = _bookService.Add(viewModel);
+                data.Data = _authorService.Add(viewModel);
                 if (data.Data.Id == Guid.Empty)
                 {
                     data.Success = false;
@@ -38,7 +37,7 @@ namespace BookStoreManagementSystem.Mvc.ApiController
                     return BadRequest(data);
                 }
                 data.Success = true;
-                data.Message =" created successfully.";
+                data.Message = "Author created successfully.";
                 return Ok(data);
             }
             catch (Exception ex)
@@ -50,11 +49,11 @@ namespace BookStoreManagementSystem.Mvc.ApiController
         }
 
         [HttpPut("update"), Authorize]
-        public ActionResult<ReturnMessageViewModel<BookViewModel>> UpdateBook(BookViewModel viewModel)
+        public ActionResult<ReturnMessageViewModel<AuthorViewModel>> UpdateAuthor(AuthorViewModel viewModel)
         {
-            var data = new ReturnMessageViewModel<BookViewModel>();
-            var result = _bookService.GetBookById(viewModel.Id);
-            if (result == null)
+            var data = new ReturnMessageViewModel<AuthorViewModel>();
+            var categories = _authorService.GetAuthorById(viewModel.Id);
+            if (categories == null)
             {
                 data.Success = false;
                 data.Message = "No record to update!.";
@@ -62,11 +61,10 @@ namespace BookStoreManagementSystem.Mvc.ApiController
             }
             try
             {
-                result.AuthorId = viewModel.AuthorId;
-                result.Description = viewModel.Description;
-                result.BookCategoriesId = viewModel.BookCategoriesId;
-                result.BookName = viewModel.BookName;
-                data.Data = _bookService.Update(result);
+                categories.Name = viewModel.Name;
+                categories.Description = viewModel.Description;
+
+                data.Data = _authorService.Update(categories);
                 if (data.Data.Id == Guid.Empty)
                 {
                     data.Success = false;
@@ -74,7 +72,7 @@ namespace BookStoreManagementSystem.Mvc.ApiController
                     return BadRequest(data);
                 }
                 data.Success = true;
-                data.Message = " updated successfully.";
+                data.Message = "Author updated successfully.";
                 return Ok(data);
             }
             catch (Exception ex)
@@ -85,14 +83,14 @@ namespace BookStoreManagementSystem.Mvc.ApiController
             }
         }
         [HttpDelete("delete/{id}"), Authorize]
-        public ActionResult<ReturnMessageViewModel<BookViewModel>> DeleteBook(string id)
+        public ActionResult<ReturnMessageViewModel<AuthorViewModel>> DeleteAuthor(string id)
         {
-            var data = new ReturnMessageViewModel<BookViewModel>();
+            var data = new ReturnMessageViewModel<AuthorViewModel>();
             try
             {
-                _bookService.Delete(Guid.Parse(id));
+                _authorService.Delete(Guid.Parse(id));
                 data.Success = true;
-                data.Message = " deleted successfully.";
+                data.Message = "Author deleted successfully.";
                 return Ok(data);
             }
             catch (Exception ex)
@@ -102,59 +100,15 @@ namespace BookStoreManagementSystem.Mvc.ApiController
                 return StatusCode(500, data);
             }
         }
-
-        [HttpGet("categories"),Authorize]
-        public ActionResult<ReturnMessageViewModel<BookListViewModel>> GetBooks()
-        {
-            var data = new ReturnMessageViewModel<BookListViewModel>();
-            var result = _bookService.GetBook();
-            if (result.Books == null || result.Books.Count == 0)
-            {
-                data.Success = false;
-                data.Message = "No record!.";
-                return NotFound(data);
-            }
-            data.Success = true;
-            data.Message = "Success";
-            data.Data = result;
-            return Ok(JsonConvert.SerializeObject(data));
-        }
-
+        
         [HttpGet("id/{id}"), Authorize]
-        public ActionResult<ReturnMessageViewModel<BookViewModel>> GetBookById(string id)
+        public ActionResult<ReturnMessageViewModel<AuthorViewModel>> GetAuthorById(string id)
         {
-            var data = new ReturnMessageViewModel<BookViewModel>();
+            var data = new ReturnMessageViewModel<AuthorViewModel>();
             try
             {
-           
-                var categories = _bookService.GetBookById(Guid.Parse(id));
-                if (categories == null)
-                {
-                    data.Success = false;
-                    data.Message = "No record!.";
-                    return NotFound(data);
-                }
-                data.Success = true;
-                data.Message = "Success";
-                data.Data = categories;
-                return Ok(JsonConvert.SerializeObject(data));
-            }
-            catch (Exception ex)
-            {
-                data.Success = false;
-                data.Message = $"An error occurred: {ex.Message}";
-                return StatusCode(500, data);
-            }
-           
-        }
 
-        [HttpGet("name/{name}"), Authorize]
-        public ActionResult<ReturnMessageViewModel<BookViewModel>> GetBookByName(string name)
-        {
-            var data = new ReturnMessageViewModel<BookViewModel>();
-            try
-            {
-                var result = _bookService.GetBookByName(name);
+                var result = _authorService.GetAuthorById(Guid.Parse(id));
                 if (result == null)
                 {
                     data.Success = false;
@@ -172,7 +126,34 @@ namespace BookStoreManagementSystem.Mvc.ApiController
                 data.Message = $"An error occurred: {ex.Message}";
                 return StatusCode(500, data);
             }
-           
+
+        }
+
+        [HttpGet("name/{name}"), Authorize]
+        public ActionResult<ReturnMessageViewModel<AuthorViewModel>> GetAuthorByName(string name)
+        {
+            var data = new ReturnMessageViewModel<AuthorViewModel>();
+            try
+            {
+                var result = _authorService.GetAuthorByName(name);
+                if (result == null)
+                {
+                    data.Success = false;
+                    data.Message = "No record!.";
+                    return NotFound(data);
+                }
+                data.Success = true;
+                data.Message = "Success";
+                data.Data = result;
+                return Ok(JsonConvert.SerializeObject(data));
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.Message = $"An error occurred: {ex.Message}";
+                return StatusCode(500, data);
+            }
+
         }
 
     }
