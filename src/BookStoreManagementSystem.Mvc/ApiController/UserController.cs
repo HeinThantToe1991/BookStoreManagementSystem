@@ -6,7 +6,7 @@ using System.Linq;
 using BookStoreManagementSystem.Domain.Model;
 using BookStoreManagementSystem.Interfaces;
 using System;
-using BookStoreManagementSystem.Mvc.ViewModel;
+using BookStoreManagementSystem.Interfaces.ViewModel;
 
 namespace BookStoreManagementSystem.Mvc.ApiController
 {

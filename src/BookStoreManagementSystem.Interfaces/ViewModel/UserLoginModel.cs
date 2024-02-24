@@ -1,4 +1,4 @@
-﻿namespace BookStoreManagementSystem.Mvc.ViewModel
+﻿namespace BookStoreManagementSystem.Interfaces.ViewModel
 {
     public class UserLoginModel
     {

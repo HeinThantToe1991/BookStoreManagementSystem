@@ -15,7 +15,7 @@ namespace BookStoreManagementSystem.Domain.Model
         public DateTime InvoiceDate { get; set; }
         public Guid BookId { get; set; }
 
-        public string CustomerName { get; set; }
+        public Guid CustomerId { get; set; }
 
         public int Quantity { get; set; }
 
@@ -24,5 +24,6 @@ namespace BookStoreManagementSystem.Domain.Model
         public int Amount { get; set; }
 
         public virtual Book Book { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
