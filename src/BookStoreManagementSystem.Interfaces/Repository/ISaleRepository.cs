@@ -16,7 +16,7 @@ namespace BookStoreManagementSystem.Interfaces.Repository
         List<Sale> GetSales();
         Sale GetSaleById(Guid id);
         List<Sale> GetSaleByDate(DateTime invoiceDate);
-        List<Sale> GetSaleByCustomerId(Guid customerId);
+        Sale GetSaleByCustomerId(Guid customerId);
         Sale GetSaleByInvoiceNo(string invoiceNo);
     }
 }

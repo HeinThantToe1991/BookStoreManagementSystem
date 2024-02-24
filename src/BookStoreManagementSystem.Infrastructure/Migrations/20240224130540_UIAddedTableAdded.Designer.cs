@@ -4,14 +4,16 @@ using BookStoreManagementSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookStoreManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240224130540_UIAddedTableAdded")]
+    partial class UIAddedTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,14 +36,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d9cbb087-b31f-4441-8506-c21c7e0c15a4"),
-                            Description = "Author is someone",
-                            Name = "HeinThantToe-Author"
-                        });
                 });
 
             modelBuilder.Entity("BookStoreManagementSystem.Domain.Model.Book", b =>
@@ -62,9 +56,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SellingPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -72,17 +63,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                     b.HasIndex("BookCategoriesId");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3b79e7b8-9a4a-41be-883a-5853056716e9"),
-                            AuthorId = new Guid("d9cbb087-b31f-4441-8506-c21c7e0c15a4"),
-                            BookCategoriesId = new Guid("3b79e7b8-9a4a-41be-883a-5853056716d7"),
-                            BookName = "Romeo & Juliet",
-                            Description = "Rule Of Romance",
-                            SellingPrice = 0m
-                        });
                 });
 
             modelBuilder.Entity("BookStoreManagementSystem.Domain.Model.BookCategories", b =>
@@ -100,14 +80,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BookCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3b79e7b8-9a4a-41be-883a-5853056716d7"),
-                            CategoryName = "Romance",
-                            Description = "About Romance "
-                        });
                 });
 
             modelBuilder.Entity("BookStoreManagementSystem.Domain.Model.Customer", b =>
@@ -125,14 +97,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8d7fae5e-3cd5-497b-b334-86790609eedc"),
-                            CustomerName = "HeinThantToe",
-                            PhoneNumber = "09786779545"
-                        });
                 });
 
             modelBuilder.Entity("BookStoreManagementSystem.Domain.Model.Sale", b =>
@@ -141,8 +105,8 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("BookId")
                         .HasColumnType("uniqueidentifier");
@@ -161,9 +125,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("SellingPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

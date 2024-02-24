@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
+using BookStoreManagementSystem.Application.Mapper;
 using BookStoreManagementSystem.Domain.Model;
 using BookStoreManagementSystem.Interfaces;
 using BookStoreManagementSystem.Interfaces.Repository;
@@ -19,42 +21,90 @@ namespace BookStoreManagementSystem.Application.Services
 
         public SaleViewModel Add(SaleViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                viewModel.Id = Guid.NewGuid();
+                _repository.Add(SaleMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new SaleViewModel();
+            };
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public SaleViewModel GetSaleByCustomerId(Guid customerId)
         {
-            throw new NotImplementedException();
+            var data = _repository.GetSaleByCustomerId(customerId);
+            return data == null ? null : SaleMapper.ToViewModel(data);
         }
 
-        public SaleViewModel GetSaleByDate(DateTime invoiceDate)
+        public SaleListViewModel GetSaleByDate(DateTime invoiceDate)
         {
-            throw new NotImplementedException();
+            var returnList = new SaleListViewModel();
+            returnList.Sales = new List<SaleViewModel>();
+            var data = _repository.GetSaleByDate(invoiceDate);
+            foreach (var item in data)
+            {
+                returnList.Sales.Add(SaleMapper.ToViewModel(item));
+            }
+            return returnList;
         }
 
         public SaleViewModel GetSaleById(Guid id)
         {
-            throw new NotImplementedException();
+            var data = _repository.GetSaleById(id);
+            return data == null ? null : SaleMapper.ToViewModel(data);
         }
 
         public SaleViewModel GetSaleByInvoiceNo(string invoiceNo)
         {
-            throw new NotImplementedException();
+            var data = _repository.GetSaleByInvoiceNo(invoiceNo);
+            return data == null ? null : SaleMapper.ToViewModel(data);
         }
 
         public SaleListViewModel GetSales()
         {
-            throw new NotImplementedException();
+            var returnList = new SaleListViewModel();
+            returnList.Sales = new List<SaleViewModel>();
+            var data = _repository.GetSales();
+            foreach (var item in data)
+            {
+                returnList.Sales.Add(SaleMapper.ToViewModel(item));
+            }
+            return returnList;
         }
 
         public SaleViewModel Update(SaleViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _repository.Update(SaleMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new SaleViewModel();
+            }
+        }
+
+        public SaleViewModel CalculateAmount(SaleViewModel viewModel)
+        {
+            try
+            {
+
+                viewModel.Amount = viewModel.SellingPrice * viewModel.Quantity;
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new SaleViewModel();
+            }
         }
     }
 }

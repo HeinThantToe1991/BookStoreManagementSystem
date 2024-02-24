@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BookStoreManagementSystem.Application.Mapper;
+using System.Xml.Linq;
 using BookStoreManagementSystem.Domain.Model;
 using BookStoreManagementSystem.Interfaces;
 using BookStoreManagementSystem.Interfaces.Repository;
@@ -19,32 +21,65 @@ namespace BookStoreManagementSystem.Application.Services
 
         public BookViewModel Add(BookViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                viewModel.Id = Guid.NewGuid();
+                _repository.Add(BookMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new BookViewModel();
+            }
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public BookListViewModel GetBook()
         {
-            throw new NotImplementedException();
+            var returnList = new BookListViewModel();
+            returnList.Books = new List<BookViewModel>();
+            var data = _repository.GetBook();
+            foreach (var item in data)
+            {
+                returnList.Books.Add(BookMapper.ToViewModel(item));
+            }
+            return returnList;
         }
 
         public BookViewModel GetBookById(Guid id)
         {
-            throw new NotImplementedException();
+            var data = _repository.GetBookById(id);
+            return data == null ? null : BookMapper.ToViewModel(data);
         }
 
-        public BookViewModel GetBookByName(string name)
+        public BookListViewModel GetBookByName(string name)
         {
-            throw new NotImplementedException();
+            var returnList = new BookListViewModel();
+            returnList.Books = new List<BookViewModel>();
+            var data = _repository.GetBookByName(name);
+            foreach (var item in data)
+            {
+                returnList.Books.Add(BookMapper.ToViewModel(item));
+            }
+            return returnList;
         }
 
         public BookViewModel Update(BookViewModel viewModel)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                _repository.Update(BookMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new BookViewModel();
+            }
         }
     }
 }

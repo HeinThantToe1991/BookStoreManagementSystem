@@ -147,9 +147,9 @@ namespace BookStoreManagementSystem.Mvc.ApiController
         }
 
         [HttpGet("name/{name}"), Authorize]
-        public ActionResult<ReturnMessageViewModel<CustomerViewModel>> GetCustomerByName(string name)
+        public ActionResult<ReturnMessageViewModel<CustomerListViewModel>> GetCustomerByName(string name)
         {
-            var data = new ReturnMessageViewModel<CustomerViewModel>();
+            var data = new ReturnMessageViewModel<CustomerListViewModel>();
             try
             {
                 var result = _customerService.GetCustomerByName(name);

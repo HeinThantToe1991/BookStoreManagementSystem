@@ -4,14 +4,16 @@ using BookStoreManagementSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookStoreManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240224132317_seeddata")]
+    partial class seeddata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +64,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SellingPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -80,8 +79,7 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                             AuthorId = new Guid("d9cbb087-b31f-4441-8506-c21c7e0c15a4"),
                             BookCategoriesId = new Guid("3b79e7b8-9a4a-41be-883a-5853056716d7"),
                             BookName = "Romeo & Juliet",
-                            Description = "Rule Of Romance",
-                            SellingPrice = 0m
+                            Description = "Rule Of Romance"
                         });
                 });
 
@@ -141,8 +139,8 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("BookId")
                         .HasColumnType("uniqueidentifier");
@@ -161,9 +159,6 @@ namespace BookStoreManagementSystem.Infrastructure.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("SellingPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

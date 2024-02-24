@@ -103,7 +103,7 @@ namespace BookStoreManagementSystem.Mvc.ApiController
             }
         }
 
-        [HttpGet("categories"),Authorize]
+        [HttpGet,Authorize]
         public ActionResult<ReturnMessageViewModel<BookListViewModel>> GetBooks()
         {
             var data = new ReturnMessageViewModel<BookListViewModel>();
@@ -149,9 +149,9 @@ namespace BookStoreManagementSystem.Mvc.ApiController
         }
 
         [HttpGet("name/{name}"), Authorize]
-        public ActionResult<ReturnMessageViewModel<BookViewModel>> GetBookByName(string name)
+        public ActionResult<ReturnMessageViewModel<BookListViewModel>> GetBookByName(string name)
         {
-            var data = new ReturnMessageViewModel<BookViewModel>();
+            var data = new ReturnMessageViewModel<BookListViewModel>();
             try
             {
                 var result = _bookService.GetBookByName(name);

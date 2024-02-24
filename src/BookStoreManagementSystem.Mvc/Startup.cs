@@ -60,9 +60,11 @@ namespace WebApplication1E
             // Register repositories
             services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
             // Register services
             services.AddScoped<IBookCategoryService, BookCategoryService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBookService, BookService>();
             services.AddAuthorization();
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();

@@ -33,9 +33,9 @@ namespace BookStoreManagementSystem.Infrastructure.Repositories
             return _context.Sales.Where(s => s.InvoiceDate == invoiceDate).ToList();
         }
 
-        public List<Sale> GetSaleByCustomerId(Guid customerId)
+        public Sale GetSaleByCustomerId(Guid customerId)
         {
-            return _context.Sales.Where(s => s.CustomerId == customerId).ToList();
+            return _context.Sales.FirstOrDefault(s => s.CustomerId == customerId);
         }
 
         public Sale GetSaleByInvoiceNo(string invoiceNo)

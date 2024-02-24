@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace BookStoreManagementSystem.Interfaces.ViewModel
 {
    
-    public class SaleListViewModel
+    public class AuthorListViewModel
     {
-        [JsonProperty("sale")]
-        public List<SaleViewModel> Sales;
+        [JsonProperty("author")]
+        public List<AuthorViewModel> Authors;
     }
 }

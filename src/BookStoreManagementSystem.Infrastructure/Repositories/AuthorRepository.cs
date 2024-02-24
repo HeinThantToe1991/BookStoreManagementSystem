@@ -28,9 +28,9 @@ namespace BookStoreManagementSystem.Infrastructure.Repositories
             return _context.Authors.FirstOrDefault(s=>s.Id == id);
         }
 
-        public Author GetAuthorByName(string name)
+        public List<Author> GetAuthorByName(string name)
         {
-            return _context.Authors.FirstOrDefault(s => s.Name == name);
+            return _context.Authors.Where(s => s.Name.Contains(name)).ToList();
         }
 
         public void Add(Author data)
@@ -58,6 +58,11 @@ namespace BookStoreManagementSystem.Infrastructure.Repositories
                 _context.Authors.Remove(data);
                 _context.SaveChanges();
             }
+        }
+
+        public List<Author> GetAuthor()
+        {
+            return _context.Authors.ToList();
         }
     }
 }

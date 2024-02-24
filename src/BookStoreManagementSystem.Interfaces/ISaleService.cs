@@ -10,12 +10,14 @@ namespace BookStoreManagementSystem.Interfaces
     {
         SaleListViewModel GetSales();
         SaleViewModel GetSaleById(Guid id);
-        SaleViewModel GetSaleByDate(DateTime invoiceDate);
+        SaleListViewModel GetSaleByDate(DateTime invoiceDate);
         SaleViewModel GetSaleByCustomerId(Guid customerId);
         SaleViewModel GetSaleByInvoiceNo(string invoiceNo);
         SaleViewModel Add(SaleViewModel viewModel);
 
         void Delete(Guid id);
         SaleViewModel Update(SaleViewModel viewModel);
+
+        SaleViewModel CalculateAmount(SaleViewModel viewModel);
     }
 }

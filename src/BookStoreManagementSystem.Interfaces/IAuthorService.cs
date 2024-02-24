@@ -8,8 +8,9 @@ namespace BookStoreManagementSystem.Interfaces
 {
     public interface IAuthorService
     {
+        AuthorListViewModel GetAuthor();
         AuthorViewModel GetAuthorById(Guid id);
-        AuthorViewModel GetAuthorByName(string name);
+        AuthorListViewModel GetAuthorByName(string name);
         AuthorViewModel Add(AuthorViewModel viewModel);
 
         void Delete(Guid id);

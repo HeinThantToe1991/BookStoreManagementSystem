@@ -19,9 +19,9 @@ namespace BookStoreManagementSystem.Infrastructure.Repositories
         }
 
 
-        public List<Book> GetBooks()
+        public List<Book> GetBook()
         {
-            return _context.Books.ToList();
+            return _context.Books.Include(i=>i.Author).Include(i=>i.BookCategories).ToList();
         }
 
         public Book GetBookById(Guid id)
@@ -29,9 +29,9 @@ namespace BookStoreManagementSystem.Infrastructure.Repositories
             return _context.Books.FirstOrDefault(s => s.Id == id);
         }
 
-        public Book GetBookByName(string name)
+        public List<Book> GetBookByName(string name)
         {
-            return _context.Books.FirstOrDefault(s => s.BookName == name);
+            return _context.Books.Where(w=>w.BookName.Contains(name)).Include(i => i.Author).Include(i => i.BookCategories).ToList();
         }
 
         public void Add(Book data)

@@ -130,9 +130,9 @@ namespace BookStoreManagementSystem.Mvc.ApiController
         }
 
         [HttpGet("name/{name}"), Authorize]
-        public ActionResult<ReturnMessageViewModel<AuthorViewModel>> GetAuthorByName(string name)
+        public ActionResult<ReturnMessageViewModel<AuthorListViewModel>> GetAuthorByName(string name)
         {
-            var data = new ReturnMessageViewModel<AuthorViewModel>();
+            var data = new ReturnMessageViewModel<AuthorListViewModel>();
             try
             {
                 var result = _authorService.GetAuthorByName(name);

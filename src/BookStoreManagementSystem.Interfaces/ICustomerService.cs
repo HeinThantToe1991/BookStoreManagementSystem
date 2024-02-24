@@ -10,7 +10,7 @@ namespace BookStoreManagementSystem.Interfaces
     {
         CustomerListViewModel GetCustomers();
         CustomerViewModel GetCustomerById(Guid id);
-        CustomerViewModel GetCustomerByName(string name);
+        CustomerListViewModel GetCustomerByName(string name);
         CustomerViewModel Add(CustomerViewModel viewModel);
 
         void Delete(Guid id);

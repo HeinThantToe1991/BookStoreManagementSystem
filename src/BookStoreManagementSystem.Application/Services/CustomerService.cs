@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
+using BookStoreManagementSystem.Application.Mapper;
 using BookStoreManagementSystem.Domain.Model;
 using BookStoreManagementSystem.Interfaces;
 using BookStoreManagementSystem.Interfaces.Repository;
@@ -19,31 +21,63 @@ namespace BookStoreManagementSystem.Application.Services
 
         public CustomerViewModel Add(CustomerViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                viewModel.Id = Guid.NewGuid();
+                _repository.Add(CustomerMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new CustomerViewModel();
+            };
         }
 
         public CustomerViewModel Update(CustomerViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _repository.Update(CustomerMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new CustomerViewModel();
+            }
         }
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public CustomerViewModel GetCustomerById(Guid id)
         {
-            throw new NotImplementedException();
+            var data = _repository.GetCustomerById(id);
+            return data == null ? null : CustomerMapper.ToViewModel(data);
         }
 
-        public CustomerViewModel GetCustomerByName(string name)
+        public CustomerListViewModel GetCustomerByName(string name)
         {
-            throw new NotImplementedException();
+            var returnList = new CustomerListViewModel();
+            returnList.Customers = new List<CustomerViewModel>();
+            var data = _repository.GetCustomerByName(name);
+            foreach (var item in data)
+            {
+                returnList.Customers.Add(CustomerMapper.ToViewModel(item));
+            }
+            return returnList;
         }
 
         public CustomerListViewModel GetCustomers()
         {
-            throw new NotImplementedException();
+            var returnList = new CustomerListViewModel();
+            returnList.Customers = new List<CustomerViewModel>();
+            var data = _repository.GetCustomers();
+            foreach (var item in data)
+            {
+                returnList.Customers.Add(CustomerMapper.ToViewModel(item));
+            }
+            return returnList;
         }
 
      

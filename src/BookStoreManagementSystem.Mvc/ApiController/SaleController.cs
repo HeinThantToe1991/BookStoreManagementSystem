@@ -132,13 +132,42 @@ namespace BookStoreManagementSystem.Mvc.ApiController
 
         }
 
-        [HttpGet("customername/{customerId}"), Authorize]
+        [HttpGet("customerId/{customerId}"), Authorize]
         public ActionResult<ReturnMessageViewModel<SaleViewModel>> GetSaleByName(string customerId)
         {
             var data = new ReturnMessageViewModel<SaleViewModel>();
             try
             {
                 var result = _saleService.GetSaleByCustomerId(Guid.Parse(customerId));
+                if (result == null)
+                {
+                    data.Success = false;
+                    data.Message = "No record!.";
+                    return NotFound(data);
+                }
+                data.Success = true;
+                data.Message = "Success";
+                data.Data = result;
+                return Ok(JsonConvert.SerializeObject(data));
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.Message = $"An error occurred: {ex.Message}";
+                return StatusCode(500, data);
+            }
+
+        }
+
+
+        [HttpGet("calculate/{customerId}"), Authorize]
+        public ActionResult<ReturnMessageViewModel<SaleViewModel>> CalculateAmount(SaleViewModel viewModel)
+        {
+            var data = new ReturnMessageViewModel<SaleViewModel>();
+            try
+            {
+
+                var result = _saleService.CalculateAmount(viewModel);
                 if (result == null)
                 {
                     data.Success = false;

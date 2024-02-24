@@ -14,6 +14,7 @@ namespace BookStoreManagementSystem.Domain.Model
         public string BookName { get; set; }
         public string Description { get; set; }
 
+        public decimal SellingPrice { get; set; }
         public Guid AuthorId { get; set; }
         public virtual Author Author { get; set; }
 

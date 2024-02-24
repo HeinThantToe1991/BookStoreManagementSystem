@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
+using BookStoreManagementSystem.Application.Mapper;
 using BookStoreManagementSystem.Domain.Model;
 using BookStoreManagementSystem.Interfaces;
 using BookStoreManagementSystem.Interfaces.Repository;
@@ -19,27 +21,62 @@ namespace BookStoreManagementSystem.Application.Services
 
         public AuthorViewModel Add(AuthorViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                viewModel.Id = Guid.NewGuid();
+                _repository.Add(AuthorMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new AuthorViewModel();
+            };
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public AuthorViewModel GetAuthorById(Guid id)
         {
-            throw new NotImplementedException();
+            var data = _repository.GetAuthorById(id);
+            return data == null ? null : AuthorMapper.ToViewModel(data);
         }
-
-        public AuthorViewModel GetAuthorByName(string name)
+        public AuthorListViewModel GetAuthor()
         {
-            throw new NotImplementedException();
+            var returnList = new AuthorListViewModel();
+            returnList.Authors = new List<AuthorViewModel>();
+            var data = _repository.GetAuthor();
+            foreach (var item in data)
+            {
+                returnList.Authors.Add(AuthorMapper.ToViewModel(item));
+            }
+            return returnList;
+        }
+        public AuthorListViewModel GetAuthorByName(string name)
+        {
+            var returnList = new AuthorListViewModel();
+            returnList.Authors = new List<AuthorViewModel>();
+            var data = _repository.GetAuthorByName(name);
+            foreach (var item in data)
+            {
+                returnList.Authors.Add(AuthorMapper.ToViewModel(item));
+            }
+            return returnList;
         }
 
         public AuthorViewModel Update(AuthorViewModel viewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _repository.Update(AuthorMapper.ToDbModel(viewModel));
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                return new AuthorViewModel();
+            }
         }
     }
 }

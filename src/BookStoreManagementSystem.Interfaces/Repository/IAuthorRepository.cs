@@ -12,5 +12,9 @@ namespace BookStoreManagementSystem.Interfaces.Repository
         void Delete(Guid id);
 
         void Update(Author data);
+
+        List<Author> GetAuthor();
+        Author GetAuthorById(Guid id);
+        List<Author> GetAuthorByName(string name);
     }
 }

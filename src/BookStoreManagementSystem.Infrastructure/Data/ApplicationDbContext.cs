@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using BookStoreManagementSystem.Domain.Model;
+using UI_Layer.Data.SeedData;
 
 namespace BookStoreManagementSystem.Infrastructure.Data
 {
@@ -19,9 +20,14 @@ namespace BookStoreManagementSystem.Infrastructure.Data
         public DbSet<Customer> Customers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure entity relationships, indexes, etc.
             base.OnModelCreating(modelBuilder);
+           #region SeedData
+            ModelBuilderExtensions.SeedAuthor(modelBuilder);
+            ModelBuilderExtensions.SeedCategory(modelBuilder);
+            ModelBuilderExtensions.SeedCustomer(modelBuilder);
+            ModelBuilderExtensions.SeedBook(modelBuilder);
+            #endregion
         }
-     
+
     }
 }

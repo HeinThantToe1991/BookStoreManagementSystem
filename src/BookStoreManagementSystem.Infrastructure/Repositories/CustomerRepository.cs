@@ -27,9 +27,9 @@ namespace BookStoreManagementSystem.Infrastructure.Repositories
             return _context.Customers.FirstOrDefault(s => s.Id == id);
         }
 
-        public Customer GetCustomerByName(string name)
+        public List<Customer> GetCustomerByName(string name)
         {
-            return _context.Customers.FirstOrDefault(s => s.CustomerName == name);
+            return _context.Customers.Where(w=>w.CustomerName.Contains(name)).ToList();
         }
 
         public void Add(Customer data)
