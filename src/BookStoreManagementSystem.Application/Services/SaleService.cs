@@ -24,6 +24,8 @@ namespace BookStoreManagementSystem.Application.Services
             try
             {
                 viewModel.Id = Guid.NewGuid();
+                viewModel.InvoiceDate = DateTime.Now.Date;
+                viewModel.InvoiceNumber = $"INV-{DateTime.Now.Year}+{DateTime.Now.Month}+{DateTime.Now.Day}+{DateTime.Now.Hour}+{DateTime.Now.Minute}+{DateTime.Now.Second}";
                 _repository.Add(SaleMapper.ToDbModel(viewModel));
                 return viewModel;
             }
@@ -98,7 +100,7 @@ namespace BookStoreManagementSystem.Application.Services
             try
             {
 
-                viewModel.Amount = viewModel.SellingPrice * viewModel.Quantity;
+                viewModel.Amount = (viewModel.SellingPrice * viewModel.Quantity) - viewModel.Discount;
                 return viewModel;
             }
             catch (Exception e)

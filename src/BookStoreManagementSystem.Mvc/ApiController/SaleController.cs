@@ -103,7 +103,35 @@ namespace BookStoreManagementSystem.Mvc.ApiController
                 return StatusCode(500, data);
             }
         }
-        
+
+        [HttpGet(), Authorize]
+        public ActionResult<ReturnMessageViewModel<SaleListViewModel>> GetSale()
+        {
+            var data = new ReturnMessageViewModel<SaleListViewModel>();
+            try
+            {
+
+                var result = _saleService.GetSales();
+                if (result == null)
+                {
+                    data.Success = false;
+                    data.Message = "No record!.";
+                    return NotFound(data);
+                }
+                data.Success = true;
+                data.Message = "Success";
+                data.Data = result;
+                return Ok(JsonConvert.SerializeObject(data));
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.Message = $"An error occurred: {ex.Message}";
+                return StatusCode(500, data);
+            }
+
+        }
+
         [HttpGet("id/{id}"), Authorize]
         public ActionResult<ReturnMessageViewModel<SaleViewModel>> GetSaleById(string id)
         {
